@@ -1,0 +1,5 @@
+# skip vs code files
+__pycache__
+
+# ignore json storage file
+file.json
