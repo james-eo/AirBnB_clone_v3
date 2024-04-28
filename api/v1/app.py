@@ -13,7 +13,7 @@ from models import storage
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # task 12
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})  # task 12
 
 # register blueprint
 app.register_blueprint(app_views)
