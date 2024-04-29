@@ -47,15 +47,20 @@ def create_city(state_id):
     state = storage.get("State", state_id)
     if not state:
         abort(404)
-    data = request.get_json()
+
+    data = request.get_json(silent=True)
     if data is None:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
+
     if 'name' not in data:
         abort(400, description="Missing name")
     data['state_id'] = state_id
     city = City(**data)
     city.save()
-    return jsonify(city.to_dict()), 201
+    
+    resp = jsonify(city.to_dict())
+    resp.status_code = 201
+    return resp
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
