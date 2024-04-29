@@ -13,7 +13,7 @@ from api.v1.views import app_views
                  methods=['GET'])
 def get_cities(state_id):
     """ Retrieves the list of all City objects of a State """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
     cities = [city.to_dict() for city in state.cities]
@@ -23,7 +23,7 @@ def get_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Retrieves a City object"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if not city:
         abort(404)
     return jsonify(city.to_dict())
@@ -32,7 +32,7 @@ def get_city(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
     """ Deletes a City object """
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if not city:
         abort(404)
     storage.delete(city)
@@ -44,7 +44,7 @@ def delete_city(city_id):
                  methods=['POST'])
 def create_city(state_id):
     """ Creates a City under a State """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
     data = request.get_json()
@@ -61,7 +61,7 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city(city_id):
     """ Updates a City object """
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if not city:
         abort(404)
     data = request.get_json()
