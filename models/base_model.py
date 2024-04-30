@@ -69,7 +69,7 @@ class BaseModel:
         dict_repr['__class__'] = self.__class__.__name__
         dict_repr.pop('_sa_instance_state', None)
         return dict_repr
-    
+
     '''
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
