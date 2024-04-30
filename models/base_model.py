@@ -10,7 +10,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-import hashlib
+from hashlib import md5
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -59,16 +59,18 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self, include_password=False):
-        """Returns a dictionary representation of the object"""
-        dict_repr = self.__dict__.copy()
-        if not include_password:
-            dict_repr.pop('password', None)
-        dict_repr['created_at'] = self.created_at.isoformat()
-        dict_repr['updated_at'] = self.updated_at.isoformat()
-        dict_repr['__class__'] = self.__class__.__name__
-        dict_repr.pop('_sa_instance_state', None)
-        return dict_repr
+    def to_dict(self, show_password=False, include_datetime_format=True):
+        """Returns a dictionary representation of the model instance."""
+        my_dict = dict(**self.__dict__)
+
+        if not show_password:
+            my_dict.pop('password', None)
+        if include_datetime_format:
+            for key, value in my_dict.items():
+                if isinstance(value, datetime.datetime):
+                    my_dict[key] = value.strftime("%Y-%m-%d %H:%M:%S")
+        my_dict.pop('_sa_instance_state', None)
+        return my_dict
 
     '''
     def to_dict(self):
