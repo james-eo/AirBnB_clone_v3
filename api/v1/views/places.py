@@ -99,7 +99,7 @@ def update_place(place_id):
 def places_search():
     """Searches for Place objects based on the JSON in the request body"""
 
-    if not request.get_json():
+    if request.get_json() is None:
         abort(400, description="Not a JSON")
 
     data = request.get_json()
